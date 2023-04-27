@@ -1,0 +1,14 @@
+Function GetProp(pId1, pId2) 
+	Dim oObjId : Set oObjId = CreateObject("MFilesAPI.ObjID")
+	oObjId.Id = pId1.Item
+	oObjId.Type = pId1.ObjectType
+	If Not pId1.Deleted Then
+		Set oProperties = Vault.ObjectOperations.GetLatestObjectVersionAndProperties(oObjId, true).Properties
+		If oProperties.IndexOf(pId2) <> -1 Then
+			'Take Display Value
+			GetProp = oProperties.SearchForProperty(pId2).TypedValue.DisplayValue
+			'Take Lookup Item
+			'GetProp = oProperties.SearchForProperty(pId2).TypedValue.GetValueAsLookups(1)
+		End If
+	End If
+End Function

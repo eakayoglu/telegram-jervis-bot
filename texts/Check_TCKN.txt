@@ -1,0 +1,28 @@
+Function tcknControl(iTCKN)
+    'Control Point 1 
+    if Not IsNumeric(iTCKN) then 
+        Err.Raise MFScriptcancel , "T.C. Kimlik Numarasi sadece rakam içermelidir."
+    end If
+    
+    'Control Point 2
+    if Len(iTCKN) <> 11 then
+        Err.Raise MFScriptcancel , "T.C. Kimlik Numarasi 11 haneli olmalidir."
+    end If
+
+    'Control Point 3
+    Dim arr(9)
+    Dim tmp, y, Val1, Val2
+
+	tmp = MID(kn,1,9)
+
+    For y = 1 To 9
+        arr(y) = CINT(MID(tmp, y, 1))
+    Next
+	
+	Val1 = CINT(((10 - (((((((arr(1) + arr(3)) + arr(5)) + arr(7)) + arr(9)) * 3) + (((arr(2) + arr(4)) + arr(6)) + arr(8))) Mod 10)) Mod 10))
+	Val2 = CINT(((10 - (((((((arr(2) + arr(4)) + arr(6)) + arr(8)) + Val1) * 3) + ((((arr(1) + arr(3)) + arr(5)) + arr(7)) + arr(9))) Mod 10)) Mod 10))
+
+	If NOT (CSTR(((tmp * 100) + (Val1 * 10)) + Val2) = CSTR(kn)) Then
+		Err.Raise MFScriptcancel , "T.C. Kimlik Numarasi dogrulanamadi. Geçerli bir T.C. Kimlik Numarasi giriniz."
+    End If
+End Function

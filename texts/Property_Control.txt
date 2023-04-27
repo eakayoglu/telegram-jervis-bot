@@ -1,0 +1,23 @@
+Function propControl(iPV, iAlias, oType)
+	Dim prID : prID = Vault.PropertyDefOperations.GetPropertyDefIDByAlias(iAlias)
+	Dim prDef : Set prDef = Vault.PropertyDefOperations.GetPropertyDef(prID)
+	If iPV.IndexOf(prID) = -1 Then
+		err.raise mfscriptcancel, prDef.Name & " özelliği kart üzerinde bulunmamaktadır."
+	Else
+		Set oPropertyValue = iPV.SearchForProperty(prID)
+		Dim prDV : prDV = oPropertyValue.TypedValue.DisplayValue
+		If prDV = "" Then
+			err.raise mfscriptcancel, prDef.Name & " özelliğini doldurmanız gerekmektedir."
+		Else
+			If oType = "val" Then
+				propControl = oPropertyValue.TypedValue.Value
+			Elseif oType = "item" Then
+				propControl = oPropertyValue.TypedValue.GetValueAsLookups(1).Item
+			Elseif oType = "lkp" Then
+				set propControl = oPropertyValue.TypedValue.GetValueAsLookup()
+			Elseif oType = "lkps" Then
+				set propControl = oPropertyValue.TypedValue.GetValueAsLookups()
+			End If
+		End If 
+	End If
+End Function

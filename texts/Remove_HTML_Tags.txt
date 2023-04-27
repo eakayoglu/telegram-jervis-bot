@@ -1,0 +1,89 @@
+Function RemoveHTMLTags(strText)
+    Dim TAGLIST, nPos1, nPos2, nPos3, strResult, strTagName, bRemove, bSearchForBlock
+
+    TAGLIST = ";!--;!DOCTYPE;A;ACRONYM;ADDRESS;APPLET;AREA;B;BASE;BASEFONT;" &_
+              "BGSOUND;BIG;BLOCKQUOTE;BODY;BR;BUTTON;CAPTION;CENTER;CITE;CODE;" &_
+              "COL;COLGROUP;COMMENT;DD;DEL;DFN;DIR;DIV;DL;DT;EM;EMBED;FIELDSET;" &_
+              "FONT;FORM;FRAME;FRAMESET;HEAD;H1;H2;H3;H4;H5;H6;HR;HTML;I;IFRAME;IMG;" &_
+              "INPUT;INS;ISINDEX;KBD;LABEL;LAYER;LAGEND;LI;LINK;LISTING;MAP;MARQUEE;" &_
+              "MENU;META;NOBR;NOFRAMES;NOSCRIPT;OBJECT;OL;OPTION;P;PARAM;PLAINTEXT;" &_
+              "PRE;Q;S;SAMP;SCRIPT;SELECT;SMALL;SPAN;STRIKE;STRONG;STYLE;SUB;SUP;" &_
+              "TABLE;TBODY;TD;TEXTAREA;TFOOT;TH;THEAD;TITLE;TR;TT;U;UL;VAR;WBR;XMP;O:P;&NBSP;" &_
+              ";!--;!doctype;a;acronym;address;applet;area;b;base;basefont;" &_
+              "bgsound;big;blockquote;body;br;button;caption;center;cite;code;" &_
+              "col;colgroup;comment;dd;del;dfn;dir;div;dl;dt;em;embed;fieldset;" &_
+              "font;form;frame;frameset;head;h1;h2;h3;h4;h5;h6;hr;html;i;iframe;img;" &_
+              "input;ins;isindex;kbd;label;layer;lagend;li;link;listing;map;marquee;" &_
+              "menu;meta;nobr;noframes;noscript;object;ol;option;p;param;plaintext;" &_
+              "pre;q;s;samp;script;select;small;span;strike;strong;style;sub;sup;" &_
+              "table;tbody;td;textarea;tfoot;th;thead;title;tr;tt;u;ul;var;wbr;xmp;o:p;&nbsp;"
+
+    Const BLOCKTAGLIST = ";APPLET;EMBED;FRAMESET;HEAD;NOFRAMES;NOSCRIPT;OBJECT;SCRIPT;STYLE;applet;embed;frameset;head;noframes;noscript;object;script;style;"
+
+    nPos1 = InStr(strText, "<")
+    Do While nPos1 > 0
+        nPos2 = InStr(nPos1 + 1, strText, ">")
+        If nPos2 > 0 Then
+            strTagName = Mid(strText, nPos1 + 1, nPos2 - nPos1 - 1)
+            strTagName = Replace(Replace(strTagName, vbCr, ""), vbLf, "")
+            nPos3 = InStr(strTagName, " ")
+
+            If nPos3 > 0 Then
+                strTagName = Left(strTagName, nPos3 - 1)
+            End If        
+
+            If Left(strTagName, 1) = "/" Then
+                strTagName = Mid(strTagName, 2)
+                bSearchForBlock = False
+            Else
+                bSearchForBlock = True
+            End If
+
+            If InStr(1, TAGLIST, ";" & strTagName & ";", vbTextCompare) > 0 Then
+                bRemove = True
+                If bSearchForBlock Then
+                    If InStr(1, BLOCKTAGLIST, ";" & strTagName & ";", vbTextCompare) > 0 Then
+                        nPos2 = Len(strText)
+                        nPos3 = InStr(nPos1 + 1, strText, "</" & strTagName, vbTextCompare)
+
+                        If nPos3 > 0 Then
+                            nPos3 = InStr(nPos3 + 1, strText, ">")
+                        End If
+
+                        If nPos3 > 0 Then
+                            nPos2 = nPos3
+                        End If
+                    End If
+                End If
+            Else
+                bRemove = False
+            End If
+
+            If bRemove Then
+                strResult = strResult & Left(strText, nPos1 - 1)
+                strText = Mid(strText, nPos2 + 1)
+            Else
+                strResult = strResult & Left(strText, nPos1)
+                strText = Mid(strText, nPos1 + 1)
+            End If
+        Else
+            strResult = strResult & strText
+            strText = ""
+        End If
+        nPos1 = InStr(strText, "<")
+    Loop
+    strResult = strResult & strText
+
+    strResult = Replace(strResult,"<O:P>","")
+    strResult = Replace(strResult,"</O:P>","")
+    strResult = Replace(strResult,"&NBSP;","")
+
+	strResult = Replace(strResult,"<o:p>","")
+    strResult = Replace(strResult,"</o:p>","")
+    strResult = Replace(strResult,"&nbsp;","")
+
+    strResult = LTrim(strResult)
+    strResult = RTrim(strResult)
+
+    RemoveHTML = strResult
+End Function

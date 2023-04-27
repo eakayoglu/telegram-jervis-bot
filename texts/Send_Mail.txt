@@ -1,0 +1,41 @@
+Function SendMail(pMailTo, pSubject, pMessage, pObjectFiles)
+	Set MyEmail = CreateObject("CDO.Message")
+	
+	MyEmail.Subject = pSubject
+	MyEmail.From = """Körfez Ulaştırma (M-Files)"" <" &  GonderenMail & ">"
+	MyEmail.To = pMailTo '"emre.akayoglu@mechsoft.com.tr"
+	MyEmail.CC = "emre.akayoglu@mechsoft.com.tr"
+	MyEmail.BodyPart.Charset = "utf-8"
+	
+	If Not IsNull(pObjectFiles) Then
+		Dim allPath : allPath = ""
+		
+		For Each oObjectFile In pObjectFiles
+			Dim szTargetPath : szTargetPath = "C:\TempMFiles\" + oObjectFile.GetNameForFileSystem()
+			Vault.ObjectFileOperations.DownloadFile oObjectFile.ID, oObjectFile.Version, szTargetPath
+			MyEmail.AddAttachment szTargetPath
+			allPath = allPath + szTargetPath + ","
+		Next
+	End If
+		
+	MyEmail.HTMLBody = pMessage
+	MyEmail.Configuration.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/sendusing") = 2
+	MyEmail.Configuration.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpserver") = "10.1.8.113"
+	MyEmail.Configuration.Fields.Item ("http://schemas.microsoft.com/cdo/configuration/smtpserverport") = 25
+	MyEmail.Configuration.Fields.Update
+	MyEmail.Send
+	
+	set MyEmail = nothing
+
+	If Not IsNull(pObjectFiles) Then
+		if allPath <> "" then
+			dim fso : set fso = CreateObject("Scripting.FileSystemObject")
+			files = Split(allPath, ",")
+			For each x In files
+				If fso.FileExists(x) then
+					fso.DeleteFile(x)
+				End If
+			Next
+		End If
+	End If
+End Function

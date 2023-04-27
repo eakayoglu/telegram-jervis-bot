@@ -1,0 +1,10 @@
+Function ParantezKirp(Kirpilacak)
+	if (InStr(Kirpilacak,"(") > 0) and (InStr(Kirpilacak,")")>0) then
+		ParantezIndex = InStr(Kirpilacak,"(")
+		Uzunluk = Len(Kirpilacak)
+		ParantezdenSonrasi = Mid(Kirpilacak,ParantezIndex+1,Uzunluk)
+		KapanisParantexIndex = InStr(ParantezdenSonrasi,")")
+		Kirp = Mid(ParantezdenSonrasi,1,KapanisParantexIndex-1)
+		ParantezKirp = Kirp
+	end if
+End Function

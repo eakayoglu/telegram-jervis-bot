@@ -1,0 +1,29 @@
+Function upperBakalim(iAlias)
+	Dim pPropID : pPropID = Vault.PropertyDefOperations.GetPropertyDefIDByAlias(iAlias)
+	Dim pPropIDDef : pPropIDDef = Vault.PropertyDefOperations.GetPropertyDef(pPropID).DataType
+
+	IF PropertyValues.IndexOf(pPropID) <> -1 THEN
+		Dim prp : prp = PropertyValues.SearchForProperty(pPropID).TypedValue.DisplayValue
+		IF prp <> "" Then
+			prp = Replace(prp,"i","İ")
+			prp = Replace(prp,"ı","I")
+			prp = Replace(prp,"ö","Ö")
+			prp = Replace(prp,"ü","Ü")
+			prp = Replace(prp,"ç","Ç")
+			prp = Replace(prp,"ğ","Ğ")
+			prp = Replace(prp,"ş","Ş")
+			prp = Ucase(prp)
+
+			Dim oPropertyValue : Set oPropertyValue = CreateObject("MFilesAPI.PropertyValue")
+			oPropertyValue.PropertyDef = pPropID
+
+			If pPropIDDef = 1 Then ' MFDataTypeText
+				oPropertyValue.TypedValue.SetValue MFDataTypeText, prp
+			elseif pPropIDDef = 13 Then 'MFDatatypeMultiLineText
+				oPropertyValue.TypedValue.SetValue MFDatatypeMultiLineText, prp
+			End If
+
+			Vault.ObjectPropertyOperations.SetProperty ObjVer, oPropertyValue
+		End IF
+	END IF
+End Function

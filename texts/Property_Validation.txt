@@ -1,0 +1,12 @@
+If PropertyValue.TypedValue.DisplayValue = "" Then
+	Dim PropertyValues : Set PropertyValues = Vault.ObjectPropertyOperations.GetProperties(ObjVer)
+	
+	Dim FirmaID : FirmaID = Vault.PropertyDefOperations.GetPropertyDefIDByAlias( "MF.PropertyDef::Firma" )
+    If PropertyValues.IndexOf(FirmaID) <> -1 Then
+        Dim Firma : Firma = PropertyValues.SearchForProperty(FirmaID).TypedValue.DisplayValue
+        If Firma = "" Then
+			Err.Raise mfscriptcancel , "Firma ya da Firma(Diğer) özelliklerinden biri dolu olmalıdır."
+        End If
+    End If
+
+End If

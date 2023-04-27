@@ -1,0 +1,12 @@
+Function getDateVal(pDate)
+    Dim oYear : oYear = mid(cstr(year(pDate)),3,2)
+    Dim oMonth : oMonth = cstr(month(pDate))
+    if len(oMonth) <> 1 then
+        oMonth = "0" & oMonth
+    end if
+    Dim oDay : oDay = cstr(day(pDate))
+    if len(oDay) <> 1 then
+        oDay = "0" & oDay
+    end if
+    getDateVal = oYear + oMonth + oDay
+End Function

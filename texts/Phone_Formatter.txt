@@ -1,0 +1,69 @@
+Dim PropertyValues : Set PropertyValues = Vault.ObjectPropertyOperations.GetProperties(ObjVer)
+If PropertyValues.IndexOf(37) = -1 Then
+	Dim valTel, oPropertyValue
+
+    arr = Array(1061, 1062, 1213, 1322, 1366)
+
+	For Each x In arr
+        If PropertyValues.IndexOf(x) <> -1 Then
+            valTel = PropertyValues.SearchForProperty(x).TypedValue.DisplayValue
+            If valTel <> "" Then
+                If IsNumeric(Replace(valTel," ","")) Then
+                    If Len(Replace(valTel," ","")) < 10 Then
+                        err.raise mfscriptcancel , "Telefon alanına minimum 10 karakter girilmelidir."
+                    ElseIf Len(Replace(valTel," ","")) > 11 Then
+                        err.raise mfscriptcancel , "Telefon alanına maximum 11 karakter girilmelidir."
+                    Else
+                        'Format Telephone Number
+                        valTel = Replace(valTel," ","")
+                        Dim firstChar : firstChar = Mid(valTel, 1,1)
+                        Dim firstBlock, secondBlock, thirdBlock, fourthBlock
+                        If firstChar = "0" Then
+                            For i=1 To Len(valTel)
+                                If i = 1 Then
+                                    firstBlock = Mid(valTel,i,4)
+                                ElseIf i = 5 Then
+                                    secondBlock = Mid(valTel,i,3)
+                                ElseIf i = 8 Then
+                                    thirdBlock = Mid(valTel,i,2)
+                                ElseIf i = 10 Then
+                                    fourthBlock = Mid(valTel,i,2)
+                                End If 
+                            Next
+                            valTel = firstBlock + " " + secondBlock + " " + thirdBlock + " " + fourthBlock
+                        Else
+                            valTel = "0" + valTel
+                            For i=1 To Len(valTel)
+                                If i = 1 Then
+                                    firstBlock = Mid(valTel,i,4)
+                                ElseIf i = 5 Then
+                                    secondBlock = Mid(valTel,i,3)
+                                ElseIf i = 8 Then
+                                    thirdBlock = Mid(valTel,i,2)
+                                ElseIf i = 10 Then
+                                    fourthBlock = Mid(valTel,i,2)
+                                End If 
+                            Next
+                            valTel = firstBlock + " " + secondBlock + " " + thirdBlock + " " + fourthBlock
+                        End If
+
+                        'Set Formatted Number to Property
+                        Set oPropertyValue = createobject("MFilesAPI.PropertyValue")
+                        oPropertyValue.PropertyDef = x
+                        oPropertyValue.TypedValue.SetValue MFDataTypeText, valTel
+                        Vault.ObjectPropertyOperations.SetProperty Objver, oPropertyValue
+
+                        'Set Last Editor
+                        Dim oLastModifiedBy : Set oLastModifiedBy = CreateObject("MFilesAPI.TypedValue")
+                        Dim oLastModifiedDate : Set oLastModifiedDate = CreateObject("MFilesAPI.TypedValue")
+                        oLastModifiedBy.SetValue MFDataTypeLookup, CurrentUserID
+                        oLastModifiedDate.SetValue MFDataTypeTimeStamp , Now
+                        Vault.ObjectPropertyOperations.SetLastModificationInfoAdmin ObjVer, True, oLastModifiedBy, True, oLastModifiedDate
+                    End If
+                Else
+                    err.raise mfscriptcancel , "Telefon alanına sadece sayı girilmelidir."
+                End If
+            End If
+        End If
+	Next
+End If

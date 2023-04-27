@@ -1,0 +1,61 @@
+Function CreateObject()
+	Dim oPropertyValue : Set oPropertyValue = CreateObject("MFilesAPI.PropertyValue")
+	Dim oPropertyValues : Set oPropertyValues = CreateObject("MFilesAPI.PropertyValues")
+
+	'Class
+	oPropertyValue.PropertyDef = MFBuiltInPropertyDefClass
+	oPropertyValue.TypedValue.SetValue MFDatatypeLookup , 7
+	oPropertyValues.Add 0 , oPropertyValue
+
+	'Work Flow 
+	oPropertyValue.PropertyDef = 38
+	oPropertyValue.TypedValue.SetValue MFDatatypeLookup , 101
+	oPropertyValues.Add 0 , oPropertyValue
+
+	'State
+	oPropertyValue.PropertyDef = 39
+	oPropertyValue.TypedValue.SetValue MFDatatypeLookup , 133
+	oPropertyValues.Add 0 , oPropertyValue
+
+	'Flow Name
+	oPropertyValue.PropertyDef = 0
+	oPropertyValue.TypedValue.SetValue MFDatatypeText , "Aksiyon Planı-" & pName
+	oPropertyValues.Add 0 , oPropertyValue
+
+	'Doküman
+	oPropertyValue.PropertyDef = 1119
+	oPropertyValue.TypedValue.SetValue MFDatatypeLookup , objver.ObjID.ID
+	oPropertyValues.Add 0 , oPropertyValue
+
+	'Begin - Create the object # 1
+	Dim sObjFiles : Set sObjFiles = CreateObject("MFilesAPI.SourceObjectFiles")
+	'End - Create the object # 1
+
+	'Begin - Create the object # 2
+	Dim oScP: Set oScp = CreateObject("MFilesAPI.SearchCondition")
+	Dim oScsP: Set OscsP = CreateObject("MFilesAPI.SearchConditions")
+	oScP.Expression.DataPropertyValuePropertyDef = 100 'Class
+	oScP.ConditionType = MFConditionTypeEqual
+	oScP.TypedValue.SetValue MFDatatypeLookup, cSertifikaID
+	oScsP.Add -1, oScP
+	oScP.Expression.DataPropertyValuePropertyDef = 37 'IsTemplate
+	oScP.ConditionType = MFConditionTypeEqual
+	oScP.TypedValue.SetValue MFDatatypeBoolean, true
+	oScsP.Add -1, oScP														
+	oScP.Expression.DataStatusValueType = MFStatusTypeDeleted 'Deleted
+	oScP.ConditionType = MFConditionTypeEqual
+	oScP.TypedValue.SetValue MFDatatypeBoolean, false
+	oScsP.Add -1, oScP
+	Dim oSearchResultsP : Set oSearchResultsP = Vault.ObjectSearchOperations.SearchForObjectsByConditions(oScsP,MFSearchFlagNone,False)
+	set tempDox = oSearchResultsP.Item(1).Files(1)
+	filePath = "C:\temp\" & tempDox.Title & "." & tempDox.Extension
+	Vault.ObjectFileOperations.DownloadFile tempDox.ID, tempDox.Version, filePath
+	Dim sObjFiles : Set sObjFiles = CreateObject("MFilesAPI.SourceObjectFiles")
+	sObjFiles.AddFile tempDox.Title, tempDox.Extension, filePath
+	'End - Create the object # 2
+
+	' Dim oAcl : Set oAcl = Vault.ObjectOperations.GetObjectPermissions(ObjVer).AccessControlList
+	Dim oAcl : Set oAcl = Vault.NamedACLOperations.GetNamedACL(261).AccessControlList
+
+	Vault.ObjectOperations.CreateNewObjectEx 107 , oPropertyValues , sObjFiles , False , True , oAcl
+END FUNCTION

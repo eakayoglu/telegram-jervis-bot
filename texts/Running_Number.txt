@@ -1,0 +1,22 @@
+Function SayiHesapla(AlinanSayi)
+    Dim iDigits : iDigits = 3
+    Dim szValue : szValue = ""
+
+    If AlinanSayi = 0 Then
+        For i = 1 To iDigits - 1
+            szValue = szValue & "0"
+        Next
+        szValue = szValue & "1"
+    Else
+        Dim iValue : iValue = AlinanSayi
+        iValue = iValue + 1
+        szValue = CStr(iValue)  
+        If Len(szValue) < iDigits Then
+            Do While Len(szValue) < iDigits
+                szValue = "0" & szValue
+            Loop
+        End If
+    End If
+
+    SayiHesapla = szValue
+End Function

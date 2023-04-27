@@ -1,0 +1,28 @@
+Function setPrps(ipType, ipDef, ipVal)
+    Dim DRM : Set DRM = CreateObject( "MFilesAPI.PropertyValue" )
+
+    DRM.PropertyDef = ipDef
+
+    if ipType = "text" then
+        DRM.TypedValue.SetValue MFDatatypeText, ipVal
+    elseif ipType = "lookup" then
+        if ipVal <> "" then
+            DRM.TypedValue.SetValue MFDatatypeLookup, CInt(ipVal)
+        else 
+            DRM.TypedValue.SetValueToNull MFDatatypeLookup
+        end if
+    elseif ipType = "lookups" then
+        if ipVal <> "" then 
+            Dim Lookups : Set Lookups = CreateObject("MFilesAPI.Lookups")
+            Dim Lookup : Set Lookup = CreateObject("MFilesAPI.Lookup")
+        
+            Lookup.Item = ipVal
+            Lookups.Add 0, Lookup
+            DRM.TypedValue.SetValueToMultiSelectLookup Lookups
+        else 
+            DRM.TypedValue.SetValueToNull MFDatatypeMultiSelectLookup
+        end if 
+    end if
+
+    Vault.ObjectPropertyOperations.SetProperty ObjVer, DRM
+End Function

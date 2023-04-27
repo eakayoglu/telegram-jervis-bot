@@ -1,0 +1,12 @@
+Function setOtherObjPrp()
+	Dim oObjID : Set oObjID = CreateObject("MFilesAPI.ObjID")
+	oObjID.Type = searchResult.ObjectType 
+	oObjID.ID = searchResult.item 
+
+	Set CheckedOut = Vault.ObjectOperations.CheckOut(oObjID)
+	Dim oPropertyValue : Set oPropertyValue = CreateObject("MFilesAPI.PropertyValue")
+	oPropertyValue.PropertyDef = 33
+	oPropertyValue.TypedValue.SetValue MFDataTypeMultilineText, "Güncellendi"
+	Vault.ObjectPropertyOperations.SetProperty CheckedOut.ObjVer, oPropertyValue
+	Call Vault.ObjectOperations.CheckIn(CheckedOut.Objver)
+End Function

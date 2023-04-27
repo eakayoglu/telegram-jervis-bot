@@ -1,0 +1,7 @@
+Function SetLastEditor()
+    Dim oLastModifiedBy : Set oLastModifiedBy = CreateObject("MFilesAPI.TypedValue")
+    Dim oLastModifiedDate : Set oLastModifiedDate = CreateObject("MFilesAPI.TypedValue")
+    oLastModifiedBy.SetValue MFDatatypeLookup, CurrentUserID
+    oLastModifiedDate.SetValue MFDataTypeTimeStamp , Now
+    Vault.ObjectPropertyOperations.SetLastModificationInfoAdmin ObjVer, True, oLastModifiedBy, True, oLastModifiedDate
+End Function
