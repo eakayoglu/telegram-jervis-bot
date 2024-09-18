@@ -1,4 +1,4 @@
- # telegram-jervis-botx
+ # telegram-jervis-bot
 
 Jervis is a Telegram bot designed to provide various functionalities such as sending download links, scripts, useful websites, and more. This project is a Python-based Telegram bot that uses `python-telegram-bot`, `requests`, and `lxml` to fetch and provide download links, handle user interaction through inline keyboard buttons, and perform other simple tasks like echoing messages and showing useful websites. The bot's token and other sensitive configurations are managed using the `dotenv` package for security.
 
