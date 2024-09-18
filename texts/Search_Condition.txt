@@ -1,3 +1,21 @@
+'------------------------------------------------------------------------------
+ Function: PersonelBul
+' Description: Searches for a personnel object in M-Files based on specific conditions.
+' Parameters:
+'   - MFilesUA: The M-Files user account identifier.
+' Returns:
+'   - The ID of the first personnel object that matches the search conditions.
+' 
+' The function creates search conditions to find a personnel object by:
+'   1. Class property (using a predefined personnel class ID).
+'   2. M-Files user account ID.
+'   3. Ensuring the object is not marked as deleted.
+' 
+' The search results are then used to return the ID of the first matching personnel object.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function PersonelBul(MFilesUA)
 	Dim oScP: Set oScp = CreateObject("MFilesAPI.SearchCondition")
 	Dim oScsP: Set OscsP = CreateObject("MFilesAPI.SearchConditions")

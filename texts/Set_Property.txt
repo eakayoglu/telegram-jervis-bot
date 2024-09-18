@@ -1,3 +1,20 @@
+'------------------------------------------------------------------------------
+' Function: setPrps
+' Description: Sets a property value for an object in M-Files based on the provided type, definition, and value.
+' Parameters:
+'   ipType (String) - The type of the property value. Can be "text", "lookup", or "lookups".
+'   ipDef (Integer) - The property definition ID.
+'   ipVal (Variant) - The value to set for the property. The type of this value depends on ipType.
+' Returns: None
+' Notes:
+'   - For "text" type, ipVal should be a string.
+'   - For "lookup" type, ipVal should be an integer representing the lookup item ID. If ipVal is an empty string, the property value is set to null.
+'   - For "lookups" type, ipVal should be a comma-separated string of lookup item IDs. If ipVal is an empty string, the property value is set to null.
+'   - The function uses the MFilesAPI to interact with M-Files properties.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function setPrps(ipType, ipDef, ipVal)
     Dim DRM : Set DRM = CreateObject( "MFilesAPI.PropertyValue" )
 

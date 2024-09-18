@@ -1,3 +1,29 @@
+'------------------------------------------------------------------------------
+' Function CreateObject
+'
+' This function creates a new object in M-Files with specified properties and files.
+'
+' Properties:
+' - Class: Sets the class of the object.
+' - Work Flow: Sets the workflow of the object.
+' - State: Sets the state of the object.
+' - Flow Name: Sets the name of the flow.
+' - Document: Links a document to the object.
+'
+' Steps:
+' 1. Initializes property values for the object.
+' 2. Adds properties such as class, workflow, state, flow name, and document.
+' 3. Creates source object files.
+' 4. Searches for template objects based on specified conditions.
+' 5. Downloads the first file from the search results and adds it to the source object files.
+' 6. Retrieves the access control list (ACL) for the object.
+' 7. Creates the new object in M-Files with the specified properties, files, and ACL.
+'
+' Note: The function uses several M-Files API objects and methods to perform these operations.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function CreateObject()
 	Dim oPropertyValue : Set oPropertyValue = CreateObject("MFilesAPI.PropertyValue")
 	Dim oPropertyValues : Set oPropertyValues = CreateObject("MFilesAPI.PropertyValues")

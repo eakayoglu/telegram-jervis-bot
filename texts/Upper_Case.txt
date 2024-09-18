@@ -1,3 +1,22 @@
+'------------------------------------------------------------------------------
+' Function: upperBakalim
+' Description: This function converts specific Turkish characters in a property value to their uppercase equivalents and updates the property value in the Vault.
+' Parameters:
+'   iAlias - The alias of the property definition.
+' Variables:
+'   pPropID - The ID of the property definition.
+'   pPropIDDef - The data type of the property definition.
+'   prp - The display value of the property.
+'   oPropertyValue - The property value object to be updated.
+' Notes:
+'   - The function checks if the property exists and is not empty.
+'   - It replaces specific Turkish characters with their uppercase equivalents.
+'   - It updates the property value in the Vault based on the data type (text or multi-line text).
+'   - The function uses M-Files API objects and methods.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function upperBakalim(iAlias)
 	Dim pPropID : pPropID = Vault.PropertyDefOperations.GetPropertyDefIDByAlias(iAlias)
 	Dim pPropIDDef : pPropIDDef = Vault.PropertyDefOperations.GetPropertyDef(pPropID).DataType

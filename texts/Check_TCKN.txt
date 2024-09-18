@@ -1,3 +1,23 @@
+'------------------------------------------------------------------------------
+' Function: tcknControl
+' Description: Validates a Turkish Identification Number (T.C. Kimlik Numarasi).
+' Parameters:
+'   - iTCKN: The Turkish Identification Number to be validated.
+' Raises:
+'   - MFScriptcancel: If the input is not numeric.
+'   - MFScriptcancel: If the input length is not 11 digits.
+'   - MFScriptcancel: If the input fails the validation algorithm.
+' Validation Steps:
+'   1. Checks if the input is numeric.
+'   2. Checks if the input length is 11 digits.
+'   3. Performs a checksum validation based on the Turkish Identification Number algorithm.
+' Notes:
+'   - The function uses a specific algorithm to validate the Turkish Identification Number.
+'   - If the input fails any of the validation steps, an error is raised with a specific message.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function tcknControl(iTCKN)
     'Control Point 1 
     if Not IsNumeric(iTCKN) then 

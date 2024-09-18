@@ -1,3 +1,15 @@
+'------------------------------------------------------------------------------
+' Function: SayiHesapla
+' Description: This function takes a number (AlinanSayi) as input and returns a string representation of the number incremented by 1, 
+'              padded with leading zeros to ensure it is at least 3 digits long.
+' Parameters:
+'   AlinanSayi - The input number to be incremented and formatted.
+' Returns:
+'   A string representation of the incremented number, padded with leading zeros to be at least 3 digits long.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function SayiHesapla(AlinanSayi)
     Dim iDigits : iDigits = 3
     Dim szValue : szValue = ""

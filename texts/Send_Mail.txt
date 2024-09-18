@@ -1,3 +1,22 @@
+'------------------------------------------------------------------------------
+' Function: SendMail
+' Description: Sends an email with the specified subject, message, and optional attachments.
+' Parameters:
+'   - pMailTo: The recipient's email address.
+'   - pSubject: The subject of the email.
+'   - pMessage: The body of the email in HTML format.
+'   - pObjectFiles: A collection of files to be attached to the email (optional).
+' Usage:
+'   Call SendMail("recipient@example.com", "Subject", "<html><body>Message</body></html>", objectFiles)
+' Notes:
+'   - The email is sent using the CDO.Message object.
+'   - The SMTP server is configured to use "10.1.8.113" on port 25.
+'   - If attachments are provided, they are downloaded to "C:\TempMFiles\" before being attached to the email.
+'   - After sending the email, any downloaded attachment files are deleted.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function SendMail(pMailTo, pSubject, pMessage, pObjectFiles)
 	Set MyEmail = CreateObject("CDO.Message")
 	

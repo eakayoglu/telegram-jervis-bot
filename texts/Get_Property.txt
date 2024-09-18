@@ -1,3 +1,19 @@
+'------------------------------------------------------------------------------
+' Function: GetProp
+' Description: Retrieves the property value of an object from the M-Files vault.
+' Parameters:
+'   pId1 - An object containing the item ID and object type.
+'   pId2 - The property ID to search for.
+' Returns:
+'   The display value of the specified property if it exists and the object is not deleted.
+'   If the property does not exist or the object is deleted, the function does not return a value.
+' Usage:
+'   Dim propertyValue
+'   propertyValue = GetProp(pId1, pId2)
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function GetProp(pId1, pId2) 
 	Dim oObjId : Set oObjId = CreateObject("MFilesAPI.ObjID")
 	oObjId.Id = pId1.Item

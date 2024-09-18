@@ -1,3 +1,24 @@
+'------------------------------------------------------------------------------
+' Function: setOtherObjPrp
+' Description: This function sets a property of another object in M-Files.
+'              It checks out the object, sets a multiline text property with a specific value, 
+'              and then checks the object back in.
+' 
+' Variables:
+'   oObjID - An instance of MFilesAPI.ObjID used to identify the object.
+'   CheckedOut - The checked-out object.
+'   oPropertyValue - An instance of MFilesAPI.PropertyValue used to set the property value.
+' 
+' Steps:
+'   1. Create an ObjID object and set its Type and ID based on the search result.
+'   2. Check out the object using Vault.ObjectOperations.CheckOut.
+'   3. Create a PropertyValue object and set its PropertyDef and TypedValue.
+'   4. Set the property of the checked-out object using Vault.ObjectPropertyOperations.SetProperty.
+'   5. Check the object back in using Vault.ObjectOperations.CheckIn.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function setOtherObjPrp()
 	Dim oObjID : Set oObjID = CreateObject("MFilesAPI.ObjID")
 	oObjID.Type = searchResult.ObjectType 

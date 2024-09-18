@@ -1,3 +1,19 @@
+'------------------------------------------------------------------------------
+' Function: RemoveHTMLTags
+' Description: This function removes HTML tags from a given string.
+' Parameters:
+'   - strText: The input string containing HTML tags.
+' Returns:
+'   - A string with all HTML tags removed.
+' 
+' The function processes the input string to identify and remove HTML tags listed in TAGLIST.
+' It also handles block tags listed in BLOCKTAGLIST by removing the entire block.
+' Additionally, it removes specific tags and entities like <O:P>, </O:P>, &NBSP;, <o:p>, </o:p>, and &nbsp;.
+' The resulting string is trimmed of leading and trailing whitespace before being returned.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function RemoveHTMLTags(strText)
     Dim TAGLIST, nPos1, nPos2, nPos3, strResult, strTagName, bRemove, bSearchForBlock
 

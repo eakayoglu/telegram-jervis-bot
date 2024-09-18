@@ -1,3 +1,17 @@
+'------------------------------------------------------------------------------
+' Function: ParantezKirp
+' Description: Extracts and returns the substring enclosed within the first pair of parentheses in the input string.
+' Parameters:
+'   Kirpilacak - The input string from which the substring within parentheses will be extracted.
+' Returns:
+'   The substring found within the first pair of parentheses in the input string. If no such substring is found, the function returns an empty string.
+' Example:
+'   result = ParantezKirp("Example (text) here")
+'   ' result will be "text"
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function ParantezKirp(Kirpilacak)
 	if (InStr(Kirpilacak,"(") > 0) and (InStr(Kirpilacak,")")>0) then
 		ParantezIndex = InStr(Kirpilacak,"(")

@@ -1,3 +1,16 @@
+'------------------------------------------------------------------------------
+' Function: IIf
+' Description: Evaluates a boolean clause and returns one of two strings based on the result.
+' Parameters:
+'   bClause - A boolean expression to evaluate.
+'   sTrue - The string to return if bClause evaluates to True.
+'   sFalse - The string to return if bClause evaluates to False.
+' Returns:
+'   A string that is either sTrue or sFalse based on the evaluation of bClause.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function IIf(bClause, sTrue, sFalse)
     If CBool(bClause) Then
         IIf = sTrue

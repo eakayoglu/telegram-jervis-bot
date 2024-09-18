@@ -1,3 +1,21 @@
+'------------------------------------------------------------------------------
+' Function: propControl
+' Description: This function checks if a specified property (identified by its alias) exists in the provided property values collection.
+'              If the property exists, it returns the property's value based on the specified output type.
+' Parameters:
+'   - iPV: The collection of property values to search within.
+'   - iAlias: The alias of the property to check.
+'   - oType: The type of output to return. Possible values are:
+'       - "val": Returns the property's value.
+'       - "item": Returns the first item in the property's lookup value.
+'       - "lkp": Returns the property's lookup value.
+'       - "lkps": Returns the property's lookups value.
+' Returns: The property's value based on the specified output type.
+' Raises: An error if the property is not found or if the property's value is empty.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function propControl(iPV, iAlias, oType)
 	Dim prID : prID = Vault.PropertyDefOperations.GetPropertyDefIDByAlias(iAlias)
 	Dim prDef : Set prDef = Vault.PropertyDefOperations.GetPropertyDef(prID)

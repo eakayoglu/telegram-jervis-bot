@@ -1,3 +1,13 @@
+'------------------------------------------------------------------------------
+' This script checks if the property value is empty.
+' If it is, it retrieves the property values of the object.
+' Then, it gets the property definition ID for the "Firma" property using its alias.
+' If the "Firma" property exists in the property values, it retrieves its display value.
+' If the "Firma" display value is also empty, it raises an error indicating that either the "Firma" or "Firma(Diğer)" property must be filled.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 If PropertyValue.TypedValue.DisplayValue = "" Then
 	Dim PropertyValues : Set PropertyValues = Vault.ObjectPropertyOperations.GetProperties(ObjVer)
 	

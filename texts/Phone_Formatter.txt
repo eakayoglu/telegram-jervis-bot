@@ -1,3 +1,29 @@
+'------------------------------------------------------------------------------
+' This script formats telephone numbers in M-Files properties.
+' 
+' The script performs the following steps:
+' 1. Retrieves the properties of the object.
+' 2. Checks if a specific property (ID 37) is not present.
+' 3. Iterates through an array of property IDs (1061, 1062, 1213, 1322, 1366).
+' 4. For each property ID in the array:
+'    a. Checks if the property exists.
+'    b. Retrieves the telephone number value.
+'    c. Validates the telephone number:
+'       - Ensures it is numeric.
+'       - Ensures it has a length between 10 and 11 characters.
+'    d. Formats the telephone number into blocks of digits.
+'    e. Sets the formatted number back to the property.
+'    f. Updates the last editor and modification date.
+' 
+' Error Handling:
+' - Raises an error if the telephone number is not numeric.
+' - Raises an error if the telephone number length is less than 10 or more than 11 characters.
+' 
+' Note: The script assumes that the telephone number may start with a '0' and formats accordingly.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Dim PropertyValues : Set PropertyValues = Vault.ObjectPropertyOperations.GetProperties(ObjVer)
 If PropertyValues.IndexOf(37) = -1 Then
 	Dim valTel, oPropertyValue

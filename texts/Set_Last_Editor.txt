@@ -1,3 +1,14 @@
+'------------------------------------------------------------------------------
+' Function: SetLastEditor
+' Description: This function sets the last editor and the last modification date for an object in M-Files.
+' Parameters: None
+' Returns: None
+' Dependencies: Requires MFilesAPI to be available and properly configured.
+' Usage: Call SetLastEditor() to update the last editor and modification date of the current object.
+
+' Written by: Emre Akayoglu
+'------------------------------------------------------------------------------
+
 Function SetLastEditor()
     Dim oLastModifiedBy : Set oLastModifiedBy = CreateObject("MFilesAPI.TypedValue")
     Dim oLastModifiedDate : Set oLastModifiedDate = CreateObject("MFilesAPI.TypedValue")

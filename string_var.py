@@ -2,8 +2,8 @@ url = 'https://www.m-files.com/product-downloads/download-update-links/'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
 version_xpath = '//*[@id="block_83a55924d6f4e44fcfaa0aac11117510"]/div/h2'
 
-pics_path = '/root/botz_telegram/telegram-jervis-bot/screenshots/'
-txts_path = '/root/botz_telegram/telegram-jervis-bot/texts/'
+pics_path = './screenshots/'
+txts_path = './texts/'
 
 welcome_message = """
 At your service, sir.
@@ -20,6 +20,7 @@ helper_links = """
 <a href='https://www.m-files.com/product-downloads/download-update-links/'>M-Files Download</a>
 """
 
+# Buttons Definitions
 btn_01 = "Search_Condition"
 btn_02 = "Create_Object"
 btn_03 = "Set_Last_Editor"
