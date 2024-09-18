@@ -1,0 +1,5 @@
+lxml
+pyTelegramBotAPI
+requests
+telebot
+python-dotenv
